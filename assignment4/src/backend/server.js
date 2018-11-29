@@ -63,7 +63,28 @@ router.route('/shoppinglist')
 router.route('/recommend')
     .get(function (req, res) {
         //request to get recommend recipe
-        res.json({code: 0, msg:'request to get recommend recipe'});
+        //res.json({code: 0, msg:'request to get recommend recipe'});
+        let threshold = 30;
+        c.query(
+            'SELECT * FROM recipe JOIN \n' +
+            '(SELECT recipeID, COUNT(*) AS hit\n' +
+            'FROM recipedetail r JOIN\n' +
+            '(SELECT * FROM inventory\n' +
+            'WHERE expireDate < date_add(curdate(), interval +? day) AND expireDate > curdate()) inv\n' +
+            'ON inv.ingredientID = r.ingredientID\n' +
+            'GROUP BY recipeID\n' +
+            'ORDER BY hit DESC) res\n' +
+            'ON res.recipeID = recipe.recipeID;',
+            [threshold],
+            function (error, result, field) {
+                if (error){
+                    console.log(error);
+                    res.json({code: 2, msg: 'Unknown error'});
+                    return;
+                    res.json({code: 1, msg: 'Here are the recommended recipes!', result: result});
+                }
+            }
+        )
     });
 
 router.route('/inventory/:invID')
