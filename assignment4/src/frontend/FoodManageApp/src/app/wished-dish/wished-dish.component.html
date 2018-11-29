@@ -1,0 +1,18 @@
+
+<div class="container justify-content-center p-5">
+  <button class="btn btn-primary">Generate Shopping List</button>
+  <div class="list-group list-group-flush p-5">
+    <a class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let dish of wishedDishes">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{dish.dishName}}</h5>
+        <small>Data to eat: {{dish.dateToEat}}</small>
+      </div>
+      <p class="mb-1">Member added: {{dish.memberAdded}}</p>
+      <p class="mb-1">Recipe: {{dish.recipeInvolved}}</p>
+      <p class="mb-1">Quantity: {{dish.quantity}}</p>
+      <small>Calorie: {{dish.calorie}}</small><br>
+      <small>Data of adding: {{dish.dateOfAdding}}</small>
+    </a>
+  </div>
+</div>
+

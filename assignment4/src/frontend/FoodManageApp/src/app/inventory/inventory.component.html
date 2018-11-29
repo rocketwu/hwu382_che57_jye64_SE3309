@@ -1,0 +1,13 @@
+
+<div class="container justify-content-center p-5">
+  <div class="list-group list-group-flush p-5">
+    <a routerLink="inventoryDetail/{{inventory.batchID}}" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let inventory of inventories">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{inventory.name}}</h5>
+      </div>
+      <p class="mb-1">Quantity: {{inventory.quantity}}</p>
+      <small>Storage Location: {{inventory.storageLocation}}</small><br>
+      <small>Expire Date: {{inventory.expireDate}}</small>
+    </a>
+  </div>
+</div>
