@@ -67,6 +67,7 @@ router.route('/recipe/:recID')
             function (err, result, field) {
                 if (err){
                     console.log(err);
+                    res.json({code: 2, msg: 'Unknown error'});
                     return;
                 } 
                 if (result[0].num == 0){
@@ -78,6 +79,7 @@ router.route('/recipe/:recID')
                         function (err, result, field) {
                             if (err){
                                 console.log(err);
+                                res.json({code: 2, msg: 'Unknown error'});
                                 return;
                             }
                             console.log('deleted ' + result.affectedRows + ' rows');
@@ -88,6 +90,7 @@ router.route('/recipe/:recID')
                                 function (err, result, field) {
                                     if (err) {
                                         console.log(err);
+                                        res.json({code: 2, msg: 'Unknown error'});
                                         return;
                                     }
                                     console.log('deleted ' + result.affectedRows + ' rows');
@@ -107,7 +110,18 @@ router.route('/recipe/:recID')
 router.route('/inventory')
     .get(function (req, res) {
         //request to show all inventory
-        res.json({code: 0, msg: 'request to show all inventory', rec: req});
+        // res.json({code: 0, msg: 'request to show all inventory', rec: req});
+        c.query(
+            'SELECT * FROM inventorywithname',
+            function (err, result, field) {
+                if (err) {
+                    console.log(err);
+                    res.json({code: 2, msg: 'Unknown error'});
+                    return;
+                }
+                res.json(result);
+            }
+        )
     });
 
 router.route('/wisheddish')
