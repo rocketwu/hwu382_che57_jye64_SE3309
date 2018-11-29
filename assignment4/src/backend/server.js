@@ -72,12 +72,13 @@ router.route('/inventory/:invID')
         //res.json({code: 0, msg: 'request to get recipe based on invID'});
         let invID = req.params.invID;
         c.query(
-            '(SELECT * FROM recipe WHERE recipeID IN ' +
-            '(SELECT DISTINCT recipeID FROM recipedetail WHERE ingredientID IN ' +
-            '(SELECT ingredientID FROM inventory WHERE batchID = ?' +
-            ')' +
-            ')' +
-            ')',
+            'SELECT *\n' +
+            'FROM ingredientinformation info JOIN \n' +
+            '(SELECT r.recipeID, r.recipeName, calorie, recipeDescription, s.ingredientID FROM recipe r JOIN\n' +
+            '(SELECT recipeID, ingredientID FROM recipedetail WHERE ingredientID IN\n' +
+            '(SELECT ingredientID FROM inventory i WHERE batchID = 6)\n' +
+            ') s ON r.recipeID = s.recipeID) t\n' +
+            'ON t.ingredientID = info.ingredientID',
             [invID],
             function (error, result, field) {
                 if (error){
