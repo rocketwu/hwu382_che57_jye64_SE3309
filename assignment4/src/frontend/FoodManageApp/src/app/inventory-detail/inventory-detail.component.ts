@@ -8,18 +8,23 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./inventory-detail.component.css']
 })
 export class InventoryDetailComponent implements OnInit {
-  private inventory;
+  private inventoryName;
+  private recipes;
   constructor(
     private inventoryService: InventoryService,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.renderInventory();
+  }
 
   ngOnInit() {
   }
   renderInventory() {
     this.route.params.subscribe((params) => {
       this.inventoryService.getInventory(params['id']).subscribe((data) => {
-        this.inventory = data;
+        this.inventoryName = data['result'][0]['name'];
+        this.recipes = data['result'];
+        console.log(this.recipes);
       });
     });
   }

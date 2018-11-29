@@ -9,6 +9,7 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { InventoryDetailComponent } from './inventory-detail/inventory-detail.component';
 import {HttpClientModule} from '@angular/common/http';
 import { WishedDishComponent } from './wished-dish/wished-dish.component';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { WishedDishComponent } from './wished-dish/wished-dish.component';
     RecipeComponent,
     RecipeDetailComponent,
     InventoryDetailComponent,
-    WishedDishComponent
+    WishedDishComponent,
+    ShoppingListComponent
   ],
   imports: [
     BrowserModule,

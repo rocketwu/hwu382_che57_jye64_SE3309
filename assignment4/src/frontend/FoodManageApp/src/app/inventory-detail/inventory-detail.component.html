@@ -1,16 +1,11 @@
 <div class="container justify-content-center">
   <div class="card m-5">
     <div class="card-body">
-      <h5 class="card-title">Inventory Name</h5>
+      <h5 class="card-title">{{inventoryName}}</h5>
       <p class="card-text">Related Recipes:</p>
     </div>
     <ul class="list-group list-group-flush">
-      <a routerLink="1" class="list-group-item">Recipe 1</a>
-      <a class="list-group-item">Recipe 2</a>
-      <a class="list-group-item">Recipe 3</a>
+      <a routerLink="{{recipe.recipeID}}" class="list-group-item" *ngFor="let recipe of recipes">{{recipe.recipeName}}</a>
     </ul>
-    <div class="card-body">
-      <button class="card-link btn btn-primary">Add to Wished Dish</button>
-    </div>
   </div>
 </div>
