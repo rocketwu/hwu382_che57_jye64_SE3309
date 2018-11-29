@@ -41,7 +41,23 @@ c.query('SELECT * FROM recipedetail', function (err, res, field) {// TODO: Êï∞Êç
 router.route('/shoppinglist')
     .get(function (req, res) {
         //request to get shopping list
-        res.json({code: 0, msg:'request to get shopping list'});
+        c.query(
+            'SELECT ingredientID, quantityNeedToBuy FROM ' +
+            '(SELECT i.ingredientID, (result.totalQuantityNeeded-i.quantity) AS quantityNeedToBuy ' +
+            'FROM inventory i JOIN ' +
+            '(SELECT (w.quantity * r.ingredientQuantity) AS totalQuantityNeeded, ingredientID ' +
+            'FROM wisheddish w, recipedetail r ' +
+            'WHERE w.recipeID = r.recipeID) result ON i.ingredientID = result.ingredientID ' +
+            'WHERE i.quantity < result.totalQuantityNeeded) AS i;',
+            function (error, result, field) {
+                if (error){
+                    console.log(error);
+                    res.json({code: 2, msg: 'Unknown error'});
+                    return;
+                }
+                res.json({code: 1, msg: 'Here are the things you need to buy', result: result});
+            }
+        )
     });
 
 router.route('/recommend')
@@ -56,8 +72,8 @@ router.route('/inventory/:invID')
         //res.json({code: 0, msg: 'request to get recipe based on invID'});
         let invID = req.params.invID;
         c.query(
-            '(SELECT * FROM recipe WHERE recipeID IN' +
-            '(SELECT DISTINCT recipeID FROM recipedetail WHERE ingredientID IN' +
+            '(SELECT * FROM recipe WHERE recipeID IN ' +
+            '(SELECT DISTINCT recipeID FROM recipedetail WHERE ingredientID IN ' +
             '(SELECT ingredientID FROM inventory WHERE batchID = ?' +
             ')' +
             ')' +
