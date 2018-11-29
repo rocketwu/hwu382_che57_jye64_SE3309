@@ -116,6 +116,34 @@ router.route('/inventory/:invID')
     });
 
 router.route('/recipe/:recID')
+
+    .get(function (req, res) {
+        let recID = req.params.recID;
+        c.query(
+            'SELECT recipeName FROM recipe WHERE recipeID = ?',
+            [recID],
+            function (error, recName, field) {
+                if (error){
+                    console.log(error);
+                    res.json({code: 2, msg: 'Unknown error'});
+                    return;
+                }
+                c.query(
+                    'SELECT * FROM recipedetail WHERE recipeID = ?',
+                    [recID],
+                    function (error, result, field) {
+                        if (error){
+                            console.log(error);
+                            res.json({code: 2, msg: 'Unknown error'});
+                            return;
+                        }
+                        res.json({code: 1, msg: "Here is the recipe: " + recName[0].recipeName + " and its detail", result: {name: recName[0].recipeName, detail: result}});
+                    }
+                )
+            }
+        )
+    })
+
     .delete(function (req, res) {
         //request to delete recipe
         //res.json({msg: 'request to delete recipe', rec: req});
