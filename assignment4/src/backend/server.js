@@ -129,7 +129,7 @@ router.route('/recipe/:recID')
                     return;
                 }
                 c.query(
-                    'SELECT * FROM recipedetail WHERE recipeID = ?',
+                    'SELECT * FROM recipedetailwithname WHERE recipeID = ?',
                     [recID],
                     function (error, result, field) {
                         if (error){
