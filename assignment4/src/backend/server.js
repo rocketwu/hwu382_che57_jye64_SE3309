@@ -33,26 +33,26 @@ c.connect(function (err) {
 });
 
 c.query('SELECT * FROM recipedetail', function (err, res, field) {// TODO: 数据库连接测试，待删
-    console.log(res[5].recipeID);
+    console.log(res);
 
 })
 
 router.route('/shoppinglist')
     .get(function (req, res) {
         //request to get shopping list
-        res.json({code: 0, msg:'request to get shopping list', rec: req.toString()});
+        res.json({code: 0, msg:'request to get shopping list'});
     });
 
 router.route('/recommend')
     .get(function (req, res) {
         //request to get recommend recipe
-        res.json({code: 0, msg:'request to get recommend recipe', rec: req});
+        res.json({code: 0, msg:'request to get recommend recipe'});
     });
 
 router.route('/inventory/:invID')
     .get(function (req, res) {
         //request to get recipe based on invID
-        res.json({code: 0, msg: 'request to get recipe based on invID', rec: req});
+        res.json({code: 0, msg: 'request to get recipe based on invID'});
     });
 
 router.route('/recipe/:recID')
@@ -127,12 +127,12 @@ router.route('/inventory')
 router.route('/wisheddish')
     .get(function (req, res) {
         //request to show all wished dish
-        res.json({code: 0, msg: 'request to show all wished dish', rec: req});
+        res.json({code: 0, msg: 'request to show all wished dish'});
     })
     
     .post(function (req, res) {
         //request to add wished dish
-        res.json({code: 0, msg: 'request to add wished dish', rec: req});
+        res.json({code: 0, msg: 'request to add wished dish'});
     });
 
 
