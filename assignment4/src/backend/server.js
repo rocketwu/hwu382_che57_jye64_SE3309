@@ -53,7 +53,25 @@ router.route('/recommend')
 router.route('/inventory/:invID')
     .get(function (req, res) {
         //request to get recipe based on invID
-        res.json({code: 0, msg: 'request to get recipe based on invID'});
+        //res.json({code: 0, msg: 'request to get recipe based on invID'});
+        let invID = req.params.invID;
+        c.query(
+            '(SELECT * FROM recipe WHERE recipeID IN' +
+            '(SELECT DISTINCT recipeID FROM recipedetail WHERE ingredientID IN' +
+            '(SELECT ingredientID FROM inventory WHERE batchID = ?' +
+            ')' +
+            ')' +
+            ')',
+            [invID],
+            function (error, result, field) {
+                if (error){
+                    console.log(error);
+                    res.json({code: 2, msg: 'Unknown error'});
+                    return;
+                }
+                res.json({code: 1, msg: 'Find related recipe!', result: result});
+            }
+        )
     });
 
 router.route('/recipe/:recID')
@@ -158,7 +176,7 @@ router.route('/wisheddish')
             [recipeID],
             function (error, result, field) {
                 if (error){
-                    console.log(err);
+                    console.log(error);
                     res.json({code: 2, msg: 'Unknown error'});
                     return;
                 }
