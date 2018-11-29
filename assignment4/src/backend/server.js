@@ -42,13 +42,16 @@ router.route('/shoppinglist')
     .get(function (req, res) {
         //request to get shopping list
         c.query(
-            'SELECT ingredientID, quantityNeedToBuy FROM ' +
-            '(SELECT i.ingredientID, (result.totalQuantityNeeded-i.quantity) AS quantityNeedToBuy ' +
-            'FROM inventory i JOIN ' +
-            '(SELECT (w.quantity * r.ingredientQuantity) AS totalQuantityNeeded, ingredientID ' +
-            'FROM wisheddish w, recipedetail r ' +
-            'WHERE w.recipeID = r.recipeID) result ON i.ingredientID = result.ingredientID ' +
-            'WHERE i.quantity < result.totalQuantityNeeded) AS i;',
+            'SELECT j.ingredientID, name, quantityNeedToBuy FROM\n' +
+            'ingredientinformation info JOIN\n' +
+            '(SELECT ingredientID, quantityNeedToBuy FROM\n' +
+            '(SELECT i.ingredientID, (result.totalQuantityNeeded-i.quantity) AS quantityNeedToBuy\n' +
+            'FROM inventory i JOIN\n' +
+            '(SELECT (w.quantity * r.ingredientQuantity) AS totalQuantityNeeded, ingredientID \n' +
+            'FROM wisheddish w, recipedetail r\n' +
+            'WHERE w.recipeID = r.recipeID) result ON i.ingredientID = result.ingredientID\n' +
+            'WHERE i.quantity < result.totalQuantityNeeded) AS i) j\n' +
+            'ON j.ingredientID = info.ingredientID;',
             function (error, result, field) {
                 if (error){
                     console.log(error);
@@ -81,8 +84,8 @@ router.route('/recommend')
                     console.log(error);
                     res.json({code: 2, msg: 'Unknown error'});
                     return;
-                    res.json({code: 1, msg: 'Here are the recommended recipes!', result: result});
                 }
+                res.json({code: 1, msg: 'Here are the recommended recipes!', result: result});
             }
         )
     });
