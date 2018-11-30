@@ -100,7 +100,7 @@ router.route('/inventory/:invID')
             'FROM ingredientinformation info JOIN \n' +
             '(SELECT r.recipeID, r.recipeName, calorie, recipeDescription, s.ingredientID FROM recipe r JOIN\n' +
             '(SELECT recipeID, ingredientID FROM recipedetail WHERE ingredientID IN\n' +
-            '(SELECT ingredientID FROM inventory i WHERE batchID = 6)\n' +
+            '(SELECT ingredientID FROM inventory i WHERE batchID = ?)\n' +
             ') s ON r.recipeID = s.recipeID) t\n' +
             'ON t.ingredientID = info.ingredientID',
             [invID],
