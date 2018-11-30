@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Env} from './env';
 
 @Injectable({
@@ -11,5 +11,15 @@ export class RecipeService {
   ) { }
   getShoppingList() {
     return this.httpClient.get('http://localhost:9000/shoppinglist');
+  }
+  getRecipe(id) {
+    return this.httpClient.get('http://localhost:9000/recipe/' + id);
+  }
+  postRecipeToWishedDish(recipe) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.httpClient.post('http://localhost:9000/wisheddish', recipe, {headers: headers});
+  }
+  deleteRecipe(id) {
+    return this.httpClient.delete('http://localhost:9000/recipe/' + id);
   }
 }

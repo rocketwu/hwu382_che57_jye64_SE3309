@@ -1,17 +1,41 @@
 <div class="container justify-content-center">
   <div class="card m-5">
     <div class="card-body">
-      <h5 class="card-title">Recipe Name</h5>
-      <p class="card-text">Recipe Description</p>
+      <h5 class="card-title">{{rName}}</h5>
+      <p class="mb-0">Ingredients: </p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Ingredient 1</li>
-      <li class="list-group-item">Ingredient 2</li>
-      <li class="list-group-item">Ingredient 3</li>
+      <li class="list-group-item" *ngFor="let ingredient of detail">
+        {{ingredient['name']}}: {{ingredient['ingredientQuantity']}}
+      </li>
     </ul>
     <div class="card-body">
-      <button class="card-link btn btn-primary">Add to Wished Dish</button>
-      <button class="btn btn-danger float-right">Delete</button>
+      <button class="btn btn-danger float-right" (click)="deleteR()">Delete</button>
     </div>
   </div>
+  <div class="p-5">
+    <h2>Add to Wished Dish: </h2>
+    <div>
+      <div class="form-group">
+        <label>Dish Name</label>
+        <input #a type="text" class="form-control" placeholder="Dish Name">
+      </div>
+      <div class="form-group">
+        <label>Date To Eat</label>
+        <input #b type="date" class="form-control" placeholder="Date to eat">
+      </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input #c type="number" class="form-control" placeholder="Quantity">
+      </div>
+      <div class="form-group">
+        <label>Member ID</label>
+        <input #d type="number" class="form-control" placeholder="Member ID">
+      </div>
+    </div>
+    <button class="card-link btn btn-primary" (click)="addToWishedDish(a.value, b.value, c.value, d.value)">Add to Wished Dish</button>
+  </div>
+</div>
+<div class="alert alert-danger" role="alert">
+  {{alertMsg}}
 </div>

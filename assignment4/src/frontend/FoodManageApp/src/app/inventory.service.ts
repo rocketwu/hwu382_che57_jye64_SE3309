@@ -17,4 +17,7 @@ export class InventoryService {
   getInventory(id): Observable <any> {
     return this.httpClient.get<any>('http://localhost:9000/inventory/' + id);
   }
+  getRecommendId(): Observable <any> {
+    return this.httpClient.get<any>('http://localhost:9000/recommend');
+  }
 }

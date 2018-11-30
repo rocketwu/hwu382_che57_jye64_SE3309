@@ -9,10 +9,12 @@ import {InventoryService} from '../inventory.service';
 })
 export class InventoryComponent implements OnInit {
   private inventories;
+  private rID;
   constructor(
     private inventoryService: InventoryService
   ) {
     this.renderInventories();
+    this.recommendRecipe();
   }
   renderInventories() {
     this.inventoryService.getInventories().subscribe((data) => {
@@ -21,7 +23,11 @@ export class InventoryComponent implements OnInit {
     // console.log(this.inventoryService.getInventories());
     // this.inventories = this.inventoryService.getInventories();
   }
-
+  recommendRecipe() {
+    this.inventoryService.getRecommendId().subscribe((data) => {
+      this.rID = data['result'][0]['recipeID'];
+    });
+  }
   ngOnInit() {
   }
 

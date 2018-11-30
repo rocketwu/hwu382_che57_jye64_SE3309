@@ -1,6 +1,6 @@
 
 <div class="container justify-content-center p-5">
-  <button class="btn btn-primary" routerLink="inventoryDetail/1/1">Recommend Recipe</button>
+  <button class="btn btn-primary" routerLink="inventoryDetail/1/{{rID}}">Recommend Recipe</button>
   <div class="list-group list-group-flush p-5">
     <a routerLink="inventoryDetail/{{inventory.batchID}}" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let inventory of inventories">
       <div class="d-flex w-100 justify-content-between">

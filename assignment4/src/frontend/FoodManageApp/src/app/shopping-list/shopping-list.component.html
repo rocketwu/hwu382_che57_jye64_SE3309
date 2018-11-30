@@ -4,9 +4,9 @@
       <h5 class="card-title">Shopping List</h5>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Ingredient 1</li>
-      <li class="list-group-item">Ingredient 2</li>
-      <li class="list-group-item">Ingredient 3</li>
+      <li class="list-group-item" *ngFor="let item of shoppingList">
+        {{item['name']}}: {{item['quantityNeedToBuy']}}
+      </li>
     </ul>
   </div>
 </div>

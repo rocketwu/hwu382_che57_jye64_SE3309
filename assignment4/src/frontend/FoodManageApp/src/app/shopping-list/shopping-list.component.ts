@@ -7,7 +7,7 @@ import {RecipeService} from '../recipe.service';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
-
+  private shoppingList;
   constructor(
     private recipeService: RecipeService
   ) {
@@ -15,7 +15,7 @@ export class ShoppingListComponent implements OnInit {
   }
   renderShoppingList() {
     this.recipeService.getShoppingList().subscribe((data) => {
-      console.log(data);
+      this.shoppingList = data['result'];
     });
   }
   ngOnInit() {
