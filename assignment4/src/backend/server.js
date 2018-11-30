@@ -260,9 +260,15 @@ router.route('/wisheddish')
                         'VALUES (?, ?, ?, ?, ?, ?, ?)',
                         [dishName, dateToEat, quantity, calorie, mysql.raw('CURDATE()'), memberID, recipeID],
                         function (err, result, field) {
-                            if (error){
-                                console.log(err);
-                                res.json({code: 2, msg: 'Unknown error'});
+                            if (err){
+                                switch (err.errno) {
+                                    case 1048:
+                                        res.json({code: 0, msg: 'Fail to add, some content is missing!!'});
+                                        break;
+                                    default:
+                                        console.log(err);
+                                        res.json({code: 2, msg: 'Unknown error'});
+                                }
                                 return;
                             }
                             res.json({code:1, msg: 'Add wished dish success!'});
