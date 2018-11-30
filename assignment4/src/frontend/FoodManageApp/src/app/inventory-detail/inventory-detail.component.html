@@ -1,11 +1,11 @@
-<div class="container justify-content-center" *ngIf="recipe.recipeName">
+<div class="container justify-content-center">
   <div class="card m-5">
     <div class="card-body">
       <h5 class="card-title">{{inventoryName}}</h5>
       <p class="card-text">Related Recipes:</p>
     </div>
     <ul class="list-group list-group-flush">
-      <a routerLink="{{recipe.recipeID}}" class="list-group-item" *ngFor="let recipe of recipes">{{recipe.recipeName}}</a>
+      <a routerLink="{{recipe.recipeID}}" class="list-group-item" *ngFor="let recipe of recipes">{{recipe['recipeName']}}</a>
     </ul>
   </div>
 </div>

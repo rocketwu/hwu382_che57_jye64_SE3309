@@ -24,12 +24,14 @@ export class InventoryDetailComponent implements OnInit {
   renderInventory() {
     this.route.params.subscribe((params) => {
       this.inventoryService.getInventory(params['id']).subscribe((data) => {
-        if (data['result'] !== []) {
+        console.log(data['result']);
+        if (data['result'].length === 0) {
           alert('No related recipes');
           this.location.back();
-        }this.inventoryName = data['result'][0]['name'];
-        this.recipes = data['result'];
-        console.log(this.recipes);
+        } else {
+          this.inventoryName = data['result'][0]['name'];
+          this.recipes = data['result'];
+        }
       });
     });
   }
